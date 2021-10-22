@@ -49,6 +49,25 @@ void leftView(Node *root, int level, int &maxLevel) {
 	leftView(root->left, level + 1, maxLevel);
 }
 
+// Bottom View of a Binary Tree
+void bottomView(Node* root) {
+	if (root == NULL) return;
+	map<int, Node*> m;
+	queue<pair<Node*, int>> q;
+	q.push({root, 0});
+	while (!q.empty()) {
+		int hd = q.front().second;
+		Node* node = q.front().first;
+		m[hd] = node;
+		if (node->left) q.push({node->left, hd-1});
+		if (node->right) q.push({node->right, hd+1});
+		q.pop();
+	}
+	for (auto i : m) {
+		cout << i.second->data << " ";
+	}
+}
+
 // Method to find the lowest common ascestor of two nodes
 Node* findAncestors(Node* root, Node* p, Node* q) {
 	if (root == NULL) return NULL;
@@ -75,10 +94,6 @@ int main() {
 		cin >> ele;
 		insertNode(ele, root);
 	}
-	auto p = root->left->left->right;
-	auto q = root->left->left->left;
-	cout << p->data << endl;
-	cout << q->data << endl;
-	cout << findAncestors(root, p, q)->data;
+	bottomView(root);
 	return 0;
 }
