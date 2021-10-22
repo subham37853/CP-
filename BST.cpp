@@ -83,8 +83,15 @@ Node* findKthSmallest(Node* root, int &k) {
 	return findKthSmallest(root->right, k);
 }
 
-
-	
+// Method to check whether a given tree is BST or not
+// Prev is a node to keep track of the parent.
+bool checkBST(Node* root, Node* &prev) {
+	if (root == NULL) return true;
+	if (checkBST(root->left, prev) == false) return false;
+	if (prev != NULL && prev->data >= root->data) return false;
+	prev = root;
+	return checkBST(root->right, prev);
+}
 
 int main() {
 	vector<int> a{-10,-3,0,5,9};
