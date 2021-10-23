@@ -93,6 +93,8 @@ bool checkBST(Node* root, Node* &prev) {
 	return checkBST(root->right, prev);
 }
 
+
+
 int main() {
 	vector<int> a{-10,-3,0,5,9};
 	Node *root = ArrayToBST(a);
