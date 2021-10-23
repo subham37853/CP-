@@ -28,44 +28,35 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-// Given an array of size n find the first negative integer in every window of size k.
+// Given a word pattern and a text. Return the count of the occurences of anagrams of the word in the text.
 
-vector<long long> firstNegative(vector<int> &a, int k) {
-	vector<long long> negatives;
-	vector<long long> res;
-	int n = a.size();
+int countAnagrams(string &text, string &pattern) {
+	int ans = 0;
+	unordered_map<char, int> m;
+	for (auto i : pattern) {
+		m[i] += 1;
+	}
+	int k = pattern.length();
+	int count = m.size();
 	int front = 0;
-	for (int i = 0; i < k; i++) {
-		if (a[i] < 0) negatives.push_back(a[i]);
-	}
-	int prev = 0;
-	if (negatives.size() == 0) res.push_back(0);
-	else res.push_back(negatives[front]);
-	int size = negatives.size();
-	for (int i = k; i < n; i++) {
-		if (a[prev++] < 0) {
-			front += 1;
-			size -= 1;
-		}
-		if (a[i] < 0) {
-			negatives.push_back(a[i]);
-			size += 1;
-		}
-		res.push_back((size == 0) ? 0 : negatives[front]);
-	}
-	return res;
+	for (int j = 0; j < text.length(); j++) {
+		m[text[j]] -= 1;
+		if (m[text[j]] == 0) count -= 1;
+		if (j - front + 1 < k) continue;
+		if (count == 0) ans += 1;
+		if (m.find(text[front]) != m.end() && m[text[front]] == 0) count += 1;
+		if (m.find(text[front]) != m.end()) m[text[front]] += 1;
+		front += 1;
+	}	
+	return ans;
 }
 
 void test_case(){
-	int n;
-	cin >> n;
-	vector<int> a(n);
-	for (auto &i : a) cin >> i;
-	int k;
-	cin >> k;
-	vector<long long> ans = firstNegative(a, k);
-	for (auto i : ans) cout << i << " "; 
-	cout << endl;
+	string pattern;
+	string text;
+	cin >> text;
+	cin >> pattern;
+	cout << countAnagrams(text, pattern) << endl;
 }
 
 int main() {
