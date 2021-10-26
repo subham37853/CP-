@@ -28,22 +28,46 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-int longestUniqueSubstr(string s) {
-	int ans = 0;
-	vector<int> m(256, -1);
-	int j = 0;
+string minWindowSubstring(string s, string t) {
+	int currLength = INT_MAX;
+	int j = 0, start = 0, cnt = 0;
+	unordered_map<char, int> m;
+	for (auto i : t) m[i] += 1;
+	cnt = m.size();
 	for (int i = 0; i < s.length(); i++) {
-		j = max(j, m[s[i]] + 1);
-		ans = max(ans, i - j + 1);
-		m[s[i]] = i;
+		if (m.find(s[i]) != m.end()) {
+			m[s[i]] -= 1;
+			if (m[s[i]] == 0) cnt -= 1;
+		}
+		if (cnt == 0) {
+			if (currLength > i - start + 1) {
+				currLength = i - start + 1;
+				j = start;
+			}
+			while (cnt == 0) {
+				if (m.find(s[start]) != m.end()) {
+					if (m[s[start]] <= 0) m[s[start]]++;
+					if (m[s[start]] > 0) cnt += 1;
+				}
+				start += 1;
+				if (cnt == 0 && currLength > i - start + 1) {
+					currLength = i - start + 1;
+					j = start;
+				}
+			}
+		}
 	}
-	return ans;
+	debug(j, currLength);
+	return (currLength == INT_MAX) ? "" : s.substr(j, currLength);
 }
 
 void test_case(){
 	string s;
+	string t;
 	cin >> s;
-	cout << longestUniqueSubstr(s) << endl;
+	cin >> t;
+	string ans = minWindowSubstring(s, t);
+	cout << ans << endl;
 }
 
 int main() {

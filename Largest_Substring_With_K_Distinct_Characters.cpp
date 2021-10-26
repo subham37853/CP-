@@ -41,6 +41,9 @@ int longestKSubstr(string s, int k) {
 	while (j < s.length()) {
 		m[s[j]] += 1;
 		if (m.size() < k) {
+			if (j == s.length() - 1) {
+				ans = max(ans, j - i + 1);
+			}
 			j += 1;
 		}
 		else if (m.size() == k) {
