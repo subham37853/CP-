@@ -18,7 +18,7 @@ void __print(bool x) {cerr << (x ? "true" : "false");}
 template<typename T, typename V>
 void __print(const pair<T, V> &x) {cerr << '{'; __print(x.first); cerr << ','; __print(x.second); cerr << '}';}
 template<typename T>
-void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i: x) cerr << (f++ ? "," : ""), __print(i); cerr << "}";}
+void __print(const T &x) {int f = 0; cerr << '{'; for (auto &i : x) cerr << (f++ ? "," : ""), __print(i); cerr << "}";}
 void _print() {cerr << "]\n";}
 template <typename T, typename... V>
 void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v...);}
@@ -29,8 +29,8 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #endif 
 
 
-// this is the implementation of binary heap
-// this is the implementation of the binary min heap
+this is the implementation of binary heap
+this is the implementation of the binary min heap
 
 
 // Min Heap class
@@ -179,9 +179,8 @@ int main() {
 	//~ cout << heap.extractMin() << endl;
 	
 	//~ cout << heap.extractMin() << endl;
-	vector<int> a{3, 5, 9, 6, 8, 20, 10, 12, 18, 9};
+	vector<int> a;
 	MinHeap heap(10);
 	heap.convert(a);
-	debug(a);
 	return 0;
 }

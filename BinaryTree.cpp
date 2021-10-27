@@ -38,6 +38,39 @@ void insertNode(int val, Node* &root) {
 	}
 }
 
+
+// You are given a perfect binary tree where all leaves are on the same level,
+// and every parent has two children.
+// The binary tree has the following definition:
+
+Node* connect(Node* root) {
+	if (root == NULL) return NULL;
+	queue<Node*> q;
+	q.push(root);
+	q.push(NULL); // Why this ??
+	while(!q.empty()) {
+		//debug(q);
+		Node* top1 = q.front();
+		q.pop();
+		Node* top2 = q.front();
+		if(top1 == NULL) {
+			q.push(NULL);
+		}
+		else {
+			top1->next = top2;
+			if(top1->left != NULL) {
+				q.push(top1->left);
+			}
+			if(top1->right != NULL) {
+				q.push(top1->right);
+			}
+		}
+	}
+	return root;
+}
+
+
+
 // This method is for printing the left view of the binary tree
 void leftView(Node *root, int level, int &maxLevel) {
 	if (root == NULL) return;
@@ -90,10 +123,8 @@ int main() {
 	cin >> n;
 	Node *root = NULL;
 	for (int i = 0; i < n; i++) {
-		int ele;
-		cin >> ele;
-		insertNode(ele, root);
+		insertNode(i, root);
 	}
-	bottomView(root);
+	connect(root);
 	return 0;
 }
