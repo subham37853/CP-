@@ -28,27 +28,45 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-int test_case(){
-	int n, k;
-	cin >> n >> k;
-	string s;
-	cin >> s;
-	// s = "#" + s;
-	int ans = 0;
-	int cnt = 0;
-	for (int i = 0; i < n/2; i++) {
-		if (s[i] != s[n - i - 1]) cnt += 1;
+// Program to implement the quick sort algorithm.
+
+int partition(vector<int> &a, int low, int high) {
+	int pivot = a[low];
+	int i = low, j = high;
+	while (i < j) {
+		do {
+			i += 1;
+		} while (a[i] <= pivot);
+		do {
+			j -= 1;
+		} while (a[j] > pivot);
+		if (i < j) swap(a[i], a[j]);
 	}
-	if (cnt > k) return cnt - k;
-	return k - cnt;
+	swap(a[low], a[j]);
+	return j;
+}
+
+void quickSort(vector<int> &a, int low, int high) {
+	if (low < high) {
+		int pivot = partition(a, low, high);
+		quickSort(a, low, pivot);
+		quickSort(a, pivot + 1, high);
+	}
+}
+
+void test_case(){
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (auto &i : a) cin >> i;
+	quickSort(a, 0, n);
+	debug(a);
 }
 
 int main() {
 	int T;
 	scanf("%d", &T);
-	int i = 1;
 	while(T--) {
-		int ans = test_case();
-		cout << "Case #" << i++ <<": " << ans << endl;
+		test_case();
 	}
 }
