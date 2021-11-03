@@ -37,7 +37,6 @@ int knapsackRecurr(int W, vector<int> &wt, vector<int> &val, int n) {
 	// Base condition if all the elements are taken then return 
 	if (n < 0) return 0;
 	// Now the two choices to choose from 
-
 	int taken = 0;
 	if (wt[n] <= W) {
 		taken = knapsackRecurr(W - wt[n], wt, val, n-1) + val[n];
