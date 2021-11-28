@@ -28,14 +28,20 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-const double MOD = 1e9 + 7;
 
 void test_case(){
-	int x, y, k;
-	cin >> x >> y >> k;
-	x = abs(x), y = abs(y);
-	if (x % k == 0 && y % k == 0) cout << "YES" << endl;
-	else cout << "NO" << endl;
+	long long n, m;
+	cin >> n >> m;
+	debug(n);
+	long long ans = 0;
+	long long zero = n - m;
+	long long x = ceil(zero / double (m + 1));
+	long long v1 = zero / x;
+	long long v2 = 0;
+	if (zero != 0) v2 = zero % x;
+	ans += v1 * (x * (x + 1) / 2);
+	if (v2 != 0) ans += (v2 * (v2 + 1) / 2);
+	cout << ans << endl;
 }
 
 int main() {

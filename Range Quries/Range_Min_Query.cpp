@@ -28,14 +28,42 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-const double MOD = 1e9 + 7;
+const int LOG = 17;
+const int NAX = 100005;
+int m[NAX][LOG];
+int binLog[NAX];
+
+int query(int L, int R) {
+	int len = R - L + 1;
+	int k = binLog[len];
+	return min(m[L][k], m[R - (1 << k) + 1][k]);
+}
 
 void test_case(){
-	int x, y, k;
-	cin >> x >> y >> k;
-	x = abs(x), y = abs(y);
-	if (x % k == 0 && y % k == 0) cout << "YES" << endl;
-	else cout << "NO" << endl;
+	int n;
+	cin >> n;
+	binLog[1] = 0;
+	for (int i = 2; i <= n; i++) {
+		binLog[i] = binLog[i/2] + 1;
+	}
+	for (int i = 0; i < n; i++) {
+		int ele;
+		cin >> ele;
+		m[i][0] = ele;
+	}
+	// doing the preprocessing 
+	for (int k = 1; k < LOG; k++) {
+		for (int i = 0; i + (1 << k) - 1 < n; i++) {
+			m[i][k] = min(m[i][k-1], m[i + (1<<(k-1))][k-1]);
+		}
+	}
+	int q;
+	cin >> q;
+	for (int i = 0; i < q; i++) {
+		int L, R;
+		cin >> L >> R;
+		cout << query(L, R) << endl;
+	}
 }
 
 int main() {

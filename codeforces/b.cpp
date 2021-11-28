@@ -28,14 +28,20 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-const double MOD = 1e9 + 7;
 
 void test_case(){
-	int x, y, k;
-	cin >> x >> y >> k;
-	x = abs(x), y = abs(y);
-	if (x % k == 0 && y % k == 0) cout << "YES" << endl;
-	else cout << "NO" << endl;
+	int n;
+	string s;
+	cin >> n >> s;
+	int b = 0, w = 0;
+	if (s[0] == 'W') w += 1;
+	else b += 1;
+	for (int i = 1; i < n; i++) {
+		if (s[i] == 'B' && s[i-1] == 'B') continue;
+		else if (s[i] == 'B' && s[i-1] != 'B') b += 1;
+		else if (s[i] == 'W' && s[i-1] != 'W') w += 1;
+	}
+	cout << min(w, b) << endl;
 }
 
 int main() {

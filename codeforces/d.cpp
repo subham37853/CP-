@@ -28,14 +28,9 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-const double MOD = 1e9 + 7;
 
 void test_case(){
-	int x, y, k;
-	cin >> x >> y >> k;
-	x = abs(x), y = abs(y);
-	if (x % k == 0 && y % k == 0) cout << "YES" << endl;
-	else cout << "NO" << endl;
+	
 }
 
 int main() {
