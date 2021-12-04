@@ -18,8 +18,7 @@ public:
 		for (auto c : word) {
 			if (node->arr[c - 'a'] == NULL) 
 				node->arr[c - 'a'] = new Trie();
-			else
-				node = node->arr[c- 'a'];
+			node = node->arr[c- 'a'];
 		}
 		node->isEnd = true;
 	}
