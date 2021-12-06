@@ -28,14 +28,30 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
-const double MOD = 1e9 + 7;
 
 void test_case(){
-	int x, y, k;
-	cin >> x >> y >> k;
-	x = abs(x), y = abs(y);
-	if (x % k == 0 && y % k == 0) cout << "YES" << endl;
-	else cout << "NO" << endl;
+	ll n, max_ele = 0;
+	cin >> n;
+	bool flag = false;
+	unordered_map<ll, ll> m;
+	unordered_set<int> s;
+	for (ll i = 0; i < n; i++) {
+		int a;
+		cin >> a;
+		m[a] += 1;
+		s.insert(a);
+		max_ele = max(max_ele, m[a]);
+	}
+	if (s.size() == 1) {
+		cout << 0 << endl;
+	}
+	else if (max_ele == 1) {
+		cout << -1 << endl;
+		return;
+	}
+	else {
+		cout << n - max_ele + 1 << endl;
+	}
 }
 
 int main() {
