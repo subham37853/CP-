@@ -51,8 +51,58 @@ int fpow(int x, int y) {
 }
 
 
+
+int binarySearch(int start, int end, int target, vector<int> &a) {
+	int low = start;
+	int high = end;
+	while (low <= high) {
+		int mid = (low + high)/2;
+		if (a[mid] == target) return mid;
+		else if (a[mid] > target) {
+			high = mid - 1;
+		}
+		else low = mid + 1;
+	}
+	return -1;
+}
+
+int findMinInRotated(vector<int>& a) {
+	int low = 0;
+	int high = a.size() - 1;
+	while (low < high) {
+		int mid = (low + high) / 2;
+		if (a[mid] > a[high]) {
+			low = mid + 1;
+		}
+		else if (a[mid] < a[low]) {
+			high = mid;
+		}
+		else {
+			low += 1;
+		}
+	}
+	return low;
+}
+
+int searchInRotatedArray(vector<int>& a, int ele) {
+	int ans = -1;
+	int minIndex = findMinInRotated(a);
+	debug(minIndex);
+	ans = binarySearch(0, minIndex - 1, ele, a);
+	debug(ans);
+	ans = binarySearch(minIndex, a.size() - 1, ele, a);
+	debug(ans);
+	return ans;
+}
+
 void test_case(){
-	
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (auto &i : a) cin >> i;
+	int ele;
+	cin >> ele;
+	cout << searchInRotatedArray(a, ele);
 }
 
 int main() {
@@ -62,3 +112,9 @@ int main() {
 		test_case();
 	}
 }
+
+
+
+
+
+
