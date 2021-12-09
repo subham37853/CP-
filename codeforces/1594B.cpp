@@ -27,24 +27,25 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #else
 #define debug(x...)
 #endif
-const int MOD = 1e9 + 7;
-int add (int a, int b) {
+#define MOD (ll)(1e9+7)
+ll add (ll a, ll b) {
 	return ((a % MOD) + (b % MOD)) % MOD;
 }
-int sub(int a, int b) {
+ll sub(ll a, ll b) {
 	return ((a % MOD) - (b % MOD)) % MOD;
 }
-int multi(int a, int b) {
+ll multi(ll a, ll b) {
 	return ((a % MOD) * (b % MOD)) % MOD;
 }
-int fpow(int x, int y) {
-	int res = 1;
-    x = x % p; 
+ll fpow(ll x, ll y) {
+	ll res = 1;
+    x = x % MOD; 
     if (x == 0) return 0;
     while (y > 0)
     {
-        if (y & 1) res = (res*x) % MOD;
-        y = y>>1;
+        if (y & 1LL) 
+        	res = (res*x) % MOD;
+        y = y>>1LL;
         x = (x*x) % MOD;
     }
     return res;
@@ -52,12 +53,22 @@ int fpow(int x, int y) {
 
 
 void test_case(){
-	
+	ll n, k;
+	cin >> n >> k;
+	ll ans = 0;
+	ll p = 0;
+	while (k) {
+		if (k & 1) 
+			ans = add(ans, fpow(n, p));
+		k >>= 1;
+		p += 1;
+	}
+	cout << ans << endl;
 }
 
 int main() {
-	int T;
-	scanf("%d", &T);
+	ll T;
+	cin >> T;
 	while(T--) {
 		test_case();
 	}

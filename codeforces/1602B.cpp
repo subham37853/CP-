@@ -27,32 +27,25 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #else
 #define debug(x...)
 #endif
-const int MOD = 1e9 + 7;
-int add (int a, int b) {
-	return ((a % MOD) + (b % MOD)) % MOD;
-}
-int sub(int a, int b) {
-	return ((a % MOD) - (b % MOD)) % MOD;
-}
-int multi(int a, int b) {
-	return ((a % MOD) * (b % MOD)) % MOD;
-}
-int fpow(int x, int y) {
-	int res = 1;
-    x = x % p; 
-    if (x == 0) return 0;
-    while (y > 0)
-    {
-        if (y & 1) res = (res*x) % MOD;
-        y = y>>1;
-        x = (x*x) % MOD;
-    }
-    return res;
-}
 
 
 void test_case(){
-	
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (int &i : a) cin >> i;
+	int q;
+	cin >> q;
+	vector<pair<int, int>> queries;
+	while (q--) {
+		int x, k;
+		cin >> x >> k;
+		queries.push_back({x, k});
+	}
+	sort(queries.begin(), queries.end(), [&](pair<int, int> &a, pair<int, int> &b) {
+		return a.second < b.second;
+	});
+
 }
 
 int main() {
