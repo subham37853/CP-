@@ -51,16 +51,77 @@ ll subtract(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) 
 ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
 
 
+vector<vector<int>> dp;
 
+
+int helper(string &s, int n, int start, int end, int index, int currPosi) {
+	if (index == s.size()) {
+		return 0;
+	}
+	if (dp[index][currPosi] != -1) {
+		return dp[index][currPosi];
+	}
+	if(currPosi == end) {
+		if (index < s.size()) {
+			if (s[index] == 'l') 
+				return dp[index][currPosi] = 1 + helper(s, n, start, end, index + 1, currPosi - 1);
+			else 
+				return dp[index][currPosi] = 1 + helper(s, n, start, end, index + 1, currPosi + 1);
+		}
+	}
+	int ans = 0;
+	if (s[index] == 'l') {
+		if (currPosi > 0) {
+			ans += helper(s, n, start, end, index + 1, currPosi - 1);
+			ans += helper(s, n, start, end, index + 1, currPosi);
+		}
+		else {
+			ans += helper(s, n, start, end, index + 1, currPosi);
+		}
+	}
+	else {
+		if (currPosi + 1 < n) {
+			ans += helper(s, n, start, end, index + 1, currPosi + 1);
+			ans += helper(s, n, start, end, index + 1, currPosi);
+		}
+		else {
+			ans += helper(s, n, start, end, index + 1, currPosi);
+		}
+	}
+	return dp[index][currPosi] = ans;
+}
+
+int schedule(vector<int> &start, vector<int> &end, vector<int> &profit) {
+	int n = start.size();
+	vector<vector<int>> jobs(n, vector<int> (3, 0));
+	for (int i = 0; i < n; i++) {
+		jobs[i] = {end[i], start[i], profit[i]};
+	}
+	sort(jobs.begin(), jobs.end());
+	map<int, int> m;
+	m[0] = 0;
+	for (vector<int> &job : jobs) {
+		int curr = prev(m.upper_bound(job[1]))->second + job[2];
+		if (curr > m.rbegin()->second) {
+			m[job[0]] = curr;
+		}
+	}
+	return m.rbegin()->second;
+}
 
 void test_case(){
-	
+	int n;
+	cin >> n;
+	string s, locked;
+	cin >> s >> locked;
+	bool ans = canBeValid(s, locked);
+	cout << ans << endl;
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int T;
-	cin >> T;
+	int T = 1;
+	// cin >> T;
 	while(T--) {
 		test_case();
 	}

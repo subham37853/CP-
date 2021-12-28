@@ -27,31 +27,25 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #else
 #define debug(x...)
 #endif
-
+const int MOD = 1e9 + 7;
+int add (int a, int b) { return ((a % MOD) + (b % MOD)) % MOD; }
+int sub(int a, int b) { return ((a % MOD) - (b % MOD)) % MOD; }
+int multi(int a, int b) { return ((a % MOD) * (b % MOD)) % MOD; }
+int fpow(int x, int y) {
+	int res = 1;
+    x = x % MOD; 
+    if (x == 0) return 0;
+    while (y > 0)
+    {
+        if (y & 1) res = (res*x) % MOD;
+        y = y>>1;
+        x = (x*x) % MOD;
+    }
+    return res;
+}
 
 void test_case(){
-	ll n, max_ele = 0;
-	cin >> n;
-	bool flag = false;
-	unordered_map<ll, ll> m;
-	unordered_set<int> s;
-	for (ll i = 0; i < n; i++) {
-		int a;
-		cin >> a;
-		m[a] += 1;
-		s.insert(a);
-		max_ele = max(max_ele, m[a]);
-	}
-	if (s.size() == 1) {
-		cout << 0 << endl;
-	}
-	else if (max_ele == 1) {
-		cout << -1 << endl;
-		return;
-	}
-	else {
-		cout << n - max_ele + 1 << endl;
-	}
+	
 }
 
 int main() {

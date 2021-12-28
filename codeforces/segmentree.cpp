@@ -52,17 +52,59 @@ ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprim
 
 
 
+class SegmentTree {
+private:
+	vector<int> a;
+	vector<int> seg;
+public:
+	SegmentTree(vector<int> &_a) {
+		a = _a;
+		seg.resize((4 * a.size()) + 1, INT_MAX);
+		buildTree(0, 0, a.size() - 1);
+	}
+	void buildTree(int index, int low, int high) {
+		if (low == high) {
+			seg[index] = a[low];
+			return;
+		}
+		int mid = (low + high)/2;
+		buildTree(2*index + 1, low, mid);
+		buildTree(2*index + 2, mid + 1, high);
+		seg[index] = min(seg[2*index + 1], seg[2*index + 2]);
+	}
+	int query(int index, int low, int high, const int L, const int R) {
+		// whether the given L and R is outside of the range or Inside
+		// invalid range check
+		if (R < low || L > high) {
+			return INT_MAX;
+		}
+		// Valid Check 
+		// L ( low high) R
+		if (L <= low && high <= R) {
+			return seg[index];
+		}
+		int mid = (low + high) / 2;
+		int left = query(2*index + 1, low, mid, L, R);
+		int right = query(2*index + 2, mid + 1, high, L, R);
+		return min(left, right);
+	}
 
-void test_case(){
-	
-}
+};
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int T;
-	cin >> T;
-	while(T--) {
-		test_case();
+	int N;
+	cin >> N;
+	vector<int> a(N);
+	for (auto &i : a) cin >> i; // input goes here
+	SegmentTree segmentTree(a);
+	int Q;
+	cin >> Q;
+	for (int i = 0; i < Q; i++) {
+		int L, R;
+		cin >> L >> R;
+		int ans = segmentTree.query(0, 0, N-1, L, R);
+		if (ans == INT_MAX) cout << -1 << endl;
+		else cout << ans << endl;
 	}
-	return 0;
 }

@@ -44,8 +44,60 @@ int fpow(int x, int y) {
     return res;
 }
 
+/*
+
+Given an array “A” of N integers and you have also defined the new array “B” as a concatenation of array “A” for an infinite number of times.
+For example, if the given array “A” is [1,2,3] then, infinite array “B” is [1,2,3,1,2,3,1,2,3,.......].
+Now you are given Q queries, each query consists of two integers “L“ and “R”. Your task is to find the sum of the subarray from index “L” to “R” (both inclusive) in the infinite array “B” for each query.
+
+Sample Input:
+1
+3
+1 2 3
+2
+1 3
+1 5
+
+Output:
+6 9
+
+*/
+
+
+int SUM;
+vector<int> prefix;
+
+int findSum(int N, int R) {
+	int count = (R / N);
+	int res = (count * SUM);
+	res += (prefix[R % N]);
+	return res;
+}
+
 void test_case(){
-	
+	int N;
+	cin >> N;
+	vector<int> a(N);
+	prefix.resize(N, 0);
+	for (int i = 0; i < N; i++) {
+		cin >> a[i];
+		SUM += a[i];
+	}
+	// Preprocessing starts from here
+	prefix[0] = a[0];
+	for (int i = 1; i < N; i++) {
+		prefix[i] = prefix[i-1] + a[i];
+	}
+	int query;
+	cin >> query;
+	for (int i = 0; i < query; i++) {
+		int L, R;
+		cin >> L >> R;
+		int RSum = findSum(N, R - 1);
+		int LSum = findSum(N, L-2);
+		int ans = RSum - LSum;
+		cout << ans << endl;
+	}
 }
 
 int main() {

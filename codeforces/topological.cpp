@@ -51,18 +51,60 @@ ll subtract(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) 
 ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
 
 
+/*
+	there are N nodes from 0 to N-1
+	prerequisites : vector<vector<int>> insides vector will be of size 2.
+
+*/
+
+bool toposort(int N, vector<vector<int>> & prerequisites) {
+	vector<vector<int>> graph(N);
+	vector<int> outDegree(N, 0);
+	queue<int> q;
+	vector<bool> visited(N, false);
+	for (int i = 0; i < prerequisites.size(); i++) {
+		graph[prerequisites[i][0]].push_back(prerequisites[i][1]);
+		graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
+		outDegree[prerequisites[i][0]] += 1;
+	}
+	for (int i = 0; i < N; i++) {
+		if (outDegree[i] == 0) q.push(i);
+	}
+	while (!q.empty()) {
+		int node = q.front();
+		q.pop();
+		visited[node] = true;
+		for (auto &i : graph[node]) {
+			outDegree[i] -= 1;
+			if (!visited[i] && outDegree[i] == 0) {
+				q.push(i);
+			}
+		}
+	}
+	for (int i = 0; i < N; i++) {
+		if (!visited[i]) return false;
+	}
+	return true;
+}
 
 
 void test_case(){
-	
+	int N;
+	cin >> N;
+	debug(sieve(N));
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int T;
-	cin >> T;
+	int T = 1;
+	// cin >> T;
 	while(T--) {
 		test_case();
 	}
 	return 0;
 }
+
+
+
+
+

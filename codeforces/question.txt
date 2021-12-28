@@ -1,0 +1,13 @@
+Given an Array a find the minimum values in the range given in queires.
+
+example : 
+a = [2, 1, 4, 3, 5, 6]
+
+queries :
+
+4 
+
+0 to 5 -> 1
+3 to 4 -> 3
+2 to 6 -> 3
+0 to 4 -> 1
