@@ -29,8 +29,8 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #endif 
 
 
-this is the implementation of binary heap
-this is the implementation of the binary min heap
+// this is the implementation of binary heap
+// this is the implementation of the binary min heap
 
 
 // Min Heap class

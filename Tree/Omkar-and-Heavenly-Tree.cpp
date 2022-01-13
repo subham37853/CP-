@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <numeric>
 using namespace std;
 
 #define int long long
@@ -52,32 +51,18 @@ ll subtract(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) 
 ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
 
 
+
+
 void test_case(){
-	int N, M;
-	cin >> N >> M;
-	for (int i = 0; i < M; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		
-	}
+	
 }
 
 int32_t main() {
 	ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-	int T = 1;
+	int T;
 	cin >> T;
 	while(T--) {
 		test_case();
 	}
+	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
