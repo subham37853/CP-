@@ -28,6 +28,20 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define debug(x...)
 #endif
 
+
+/*
+
+Question : Given a string "S" and a string "P" find the number of times S has p as a subsequence.
+
+Sample Input : S = "ABCBABC"
+			   P = "ABC"
+Output : 5
+
+Explanation : S has P as a subsequence at (0, 1, 2), (0, 1, 6), 
+										  (0, 3, 6), (0, 5, 6) and (4, 5, 6)
+*/
+
+
 int helper(int s_index, int p_index, string &s, string &p, vector<vector<int>> &dp) {
 	if (p_index == p.size()) return 1;
 	if (s_index == s.size()) return 0;
