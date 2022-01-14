@@ -1,25 +1,29 @@
 #include<bits/stdc++.h> 
 using namespace std;
 
-vector<vector<int>> graph;
-vector<bool> visited;
 
-bool dfs(int node, int parent) {
+
+bool dfs(int node, int parent, vector<vector<int>> &graph, vector<bool> &visited) {
 	visited[node] = true;
 	for (int neighbour : graph[node]) {
 		if (!visited[neighbour]) {
-			return dfs(neighbour, node);
+			return dfs(neighbour, node, graph, visited);
 		}
-		else if (neighbour != node) return true;
+		else if (neighbour != parent) return true;
 	}
 	return false;
 }
 
 bool cycleDetection(int N, vector<vector<int>> &edges) {
-	graph.resize(N);
-	visited.resize(N, false);
+	vector<vector<int>> graph(N);
+	vector<bool> visited(N, false);
+	for (int i = 0; i < edges.size(); i++) {
+        graph[edges[i][0]].push_back(edges[i][1]);
+        graph[edges[i][1]].push_back(edges[i][0]);
+    }
 	for (int i = 0; i < N; i++) {
-		if (!visited[i]) return dfs(i, -1);
+		if (!visited[i])  
+			if (dfs(i, -1, graph, visited)) return true;
 	}
 	return false;
 }
