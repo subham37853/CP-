@@ -53,13 +53,9 @@ ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprim
 
 
 void test_case(){
-	int N, M;
-	cin >> N >> M;
-	for (int i = 0; i < M; i++) {
-		int a, b, c;
-		cin >> a >> b >> c;
-		
-	}
+	vector<int> a = {1, 2, 3, 4, 5};
+	
+	for (auto &i : a) cout << i << " ";
 }
 
 int32_t main() {
