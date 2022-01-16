@@ -57,6 +57,7 @@ int helper(vector<vector<int>> &points, int n, int index, int prev) {
 void test_case(){
 	int n;
 	cin >> n;
+	pair<int, int> p;
 	vector<vector<int>> points;
 	for (int i = 0; i < n; i++) {
 		int a, b, c;
