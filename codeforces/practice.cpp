@@ -51,145 +51,25 @@ ll subtract(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a - b) % m) + m) 
 ll divide(ll a, ll b, ll m) {a = a % m; b = b % m; return (multiply(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
 
 
-
-// int helper(string &s, int n, int start, int end, int index, int currPosi) {
-// 	if (index == s.size()) {
-// 		return 0;
-// 	}
-// 	if (dp[index][currPosi] != -1) {
-// 		return dp[index][currPosi];
-// 	}
-// 	if(currPosi == end) {
-// 		if (index < s.size()) {
-// 			if (s[index] == 'l') 
-// 				return dp[index][currPosi] = 1 + helper(s, n, start, end, index + 1, currPosi - 1);
-// 			else 
-// 				return dp[index][currPosi] = 1 + helper(s, n, start, end, index + 1, currPosi + 1);
-// 		}
-// 	}
-// 	int ans = 0;
-// 	if (s[index] == 'l') {
-// 		if (currPosi > 0) {
-// 			ans += helper(s, n, start, end, index + 1, currPosi - 1);
-// 			ans += helper(s, n, start, end, index + 1, currPosi);
-// 		}
-// 		else {
-// 			ans += helper(s, n, start, end, index + 1, currPosi);
-// 		}
-// 	}
-// 	else {
-// 		if (currPosi + 1 < n) {
-// 			ans += helper(s, n, start, end, index + 1, currPosi + 1);
-// 			ans += helper(s, n, start, end, index + 1, currPosi);
-// 		}
-// 		else {
-// 			ans += helper(s, n, start, end, index + 1, currPosi);
-// 		}
-// 	}
-// 	return dp[index][currPosi] = ans;
-// }
-
-int schedule(vector<int> &start, vector<int> &end, vector<int> &profit) {
-	int n = start.size();
-	vector<vector<int>> jobs(n, vector<int> (3, 0));
-	for (int i = 0; i < n; i++) {
-		jobs[i] = {end[i], start[i], profit[i]};
+vector<int> findProductWithoutItself(vector<int> &a) {
+	vector<int> left(a.size(), 1);
+	for (int i = 1; i < a.size(); i++) {
+		left[i] = left[i-1] * a[i - 1];
 	}
-	sort(jobs.begin(), jobs.end());
-	map<int, int> m;
-	m[0] = 0;
-	for (vector<int> &job : jobs) {
-		int curr = prev(m.upper_bound(job[1]))->second + job[2];
-		if (curr > m.rbegin()->second) {
-			m[job[0]] = curr;
-		}
+	int prev = 1;
+	for (int i = a.size() - 2; i >= 0; i--) {
+		prev = prev * a[i + 1];
+		left[i] *= prev;
 	}
-	return m.rbegin()->second;
-}
-
-int dp[1001][1001][2];
-
-int bobAndApples(int index, vector<int> &vitamin, vector<int> &price, int M, int halfed) {
-	if (index >= vitamin.size() || M <= 0) return 0;
-	if (dp[index][M][halfed] != -1) return dp[index][M][halfed];
-	if (halfed == 1) {
-		if (price[index] <= M) {
-			int taken = vitamin[index] + bobAndApples(index + 1, vitamin, price, M - price[index], halfed);
-			int notTaken = bobAndApples(index + 1, vitamin, price, M, halfed);
-			return dp[index][M][halfed] = max(taken, notTaken);
-		}
-		else {
-			return dp[index][M][halfed] = bobAndApples(index + 1, vitamin, price, M, halfed);
-		}
-	}
-	else if (price[index] <= M) {
-		int taken = vitamin[index] + bobAndApples(index + 1, vitamin, price, M - price[index], 0);
-		int halfedTaken = vitamin[index] +  bobAndApples(index + 1, vitamin, price, M - (price[index] / 2), 1);
-		int notTaken = bobAndApples(index + 1, vitamin, price, M, 0);
-		return dp[index][M][halfed] = max({taken, halfedTaken, notTaken});
-	}
-	else if (price[index] / 2 <= M && halfed == false) {
-		int halfedTaken = vitamin[index] +  bobAndApples(index + 1, vitamin, price, M - (price[index] / 2), 1);
-		int notTaken = bobAndApples(index + 1, vitamin, price, M, 0);
-		return dp[index][M][halfed] = max(halfedTaken, notTaken);
-	}
-	else {
-		return dp[index][M][halfed] = bobAndApples(index + 1, vitamin, price, M, 0);
-	}
-}
-
-int makeSmallestNumber(int num) {
-    int freq[10] = {0};
-    bool is_pos = (num>0);
-    num = abs(num);
-    while (num) {
-        int d = num % 10;
-        freq[d]++;
-        num = num / 10;
-    }
-    int result = 0;
-    if(is_pos) {
-      for (int i = 1 ; i <= 9 ; i++) {
-          if (freq[i]) {
-              result = i;
-              freq[i]--;
-              break;
-          }
-      }
-      for (int i = 0 ; i <= 9 ; i++)
-          while (freq[i]--)
-              result = result * 10 + i;
-    }
-    else {
-      for (int i = 9 ; i >= 1 ; i--) {
-         if (freq[i]) {
-            result = i;
-            freq[i]--;
-            break;
-         }
-      }
-      for (int i = 9 ; i >=0 ; i--)
-         while (freq[i]--)
-            result = result * 10 + i;
-      result = -result;
-    }
-    return result;
-}
-
-vector<int> alternateSort(vector<int> arr) {
-	sort(arr.begin(), arr.end());
-	vector<int> ans;
-	for (int i = 0; i < arr.size(); i += 2) {
-		ans.push_back(arr[i]);
-	}
-	return ans;
+	return left;
 }
 
 void test_case(){
-	cout << makeSmallestNumber(310);
-	vector<int> arr = {3, 5, 1, 5, 9, 10, 2, 6};
-	auto ans = alternateSort(arr);
-	debug(ans);
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (auto &i : a) cin >> i;
+	findProductWithoutItself(a);
 }
 
 int32_t main() {
