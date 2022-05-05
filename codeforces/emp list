@@ -1,0 +1,88 @@
+emp list 
+
+emp : Fname, Lname, startDate, endDate
+
+goal : remove the duplicates emp 
+
+
+[saaa, aaa, ss, aa, ss, ]
+
+Aman
+Shubham
+Aman 
+Anish
+
+Aman
+Aman
+Anish
+Shubham
+
+prev = 0;
+for (int i = 1; i < n; i++) {
+	empObj = empList.get(prev); // PrevObj
+	currObj = empList.get(i); // curr Obje
+	while ()
+}
+
+
+
+hashfuntion is mod 10 1, a, 11, b
+
+[1-> ((1, a), (11, b)] -> logn
+
+
+list of int ->  7 9 11 1 2 3 5 6
+
+
+
+int binary(a, target, low, high) {
+	if (low > high) return -1;
+	int mid = (low + high) / 2;
+	if (a[mid] == target) return mid;
+	if (a[mid] >= target) return binary(a, target, low, mid - 1);
+	else return binary(a, target, mid + 1, high);
+}\
+
+
+8 9 11 1 
+2 3 5 6 7
+
+int findInRotated(a, target, low, high) {
+	if (low > high) return -1;
+	int mid = (low + high) / 2;
+	if (a[mid] == target) return mid;
+	if (a[low] <= a[mid]) {
+		if (target >= a[low] && target <= a[mid]) 
+			return findInRotated(a, target, low, mid - 1);
+		return findInRotated(a, target, mid + 1, high);
+	}
+	if (a[high] >= a[mid]) {
+		if (target <= a[high] && target >= a[mid]) return findInRotated(a, target, mid + 1, high);
+		return findInRotated(a, target, low, mid - 1);
+	}
+	return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
